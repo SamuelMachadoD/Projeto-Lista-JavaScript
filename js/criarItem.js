@@ -1,3 +1,6 @@
+import { editarItem } from "./editarItem.js";
+import { excluirItem } from "./excluirItem.js";
+import { dataPost } from "./fazerTextoData.js";
 import { verificarListaComprados } from "./verificarListaComprados.js";
 
 const listaComprados = document.getElementById("lista-comprados");
@@ -56,6 +59,9 @@ export function criarItemDaLista(item){
     const imagemRemover = document.createElement("img");
     imagemRemover.src = "img/delete.svg";
     imagemRemover.alt = "Remover";
+    botaoRemover.addEventListener("click", function(){
+        excluirItem(itemDaLista);
+    })
     botaoRemover.appendChild(imagemRemover);
     
 
@@ -65,19 +71,18 @@ export function criarItemDaLista(item){
     imagemEditar.src = "img/edit.svg";
     imagemEditar.alt = "Editar";
     botaoEditar.appendChild(imagemEditar);
+
+    botaoEditar.addEventListener("click", function(){
+        editarItem(itemDaLista);
+    })
     containerBotoes.appendChild(botaoRemover);
     containerBotoes.appendChild(botaoEditar);
 
     containerItemLista.appendChild(containerNomeDoItem);
     containerItemLista.appendChild(containerBotoes);
-    
-    const itemData = document.createElement("p");
-    itemData.innerText = `${new Date().toLocaleDateString("pt-BR", { weekday: "long"})} (${new Date().toLocaleDateString("pt-BR")}) às ${new Date().toLocaleTimeString("pt-BR", {hour: "numeric", minute: "numeric"})}`;
-    itemData.classList.add("texto-data");
-
 
     itemDaLista.appendChild(containerItemLista);
-    itemDaLista.appendChild(itemData);
+    itemDaLista.appendChild(dataPost());
 
     return itemDaLista;
 }
